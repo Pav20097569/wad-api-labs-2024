@@ -4,14 +4,31 @@
   "description": "node lab 1",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node index.js",
+    "dev": "nodemon --exec npm start"
   },
   "author": "Pav20097569",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "babel": "^5.8.38",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.1.0",
     "babel-preset-env": "^1.7.0",
-    "cli": "^1.0.1",
+    "eslint": "^9.14.0",
     "nodemon": "^3.1.7"
-  }
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pav20097569/wad-api-labs-2024.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Pav20097569/wad-api-labs-2024/issues"
+  },
+  "homepage": "https://github.com/Pav20097569/wad-api-labs-2024#readme"
 }
