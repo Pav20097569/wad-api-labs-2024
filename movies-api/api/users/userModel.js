@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
+
 
 // Password validation regex: at least 8 characters, 1 letter, 1 number, and 1 special character
 const passwordValidator = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -30,8 +31,30 @@ UserSchema.pre('save', async function(next) {
 });
 
 // Method to compare entered password with the stored hashed password
-UserSchema.methods.matchPassword = async function(enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password); // Compare the entered password with the hashed password
+UserSchema.methods.comparePassword = async function (passw) { 
+  return await bcrypt.compare(passw, this.password); 
+}
+
+UserSchema.statics.findByUserName = function (username) {
+  return this.findOne({ username: username });
 };
+
+UserSchema.pre('save', async function(next) {
+  const saltRounds = 10; // You can adjust the number of salt rounds
+  //const user = this;
+  if (this.isModified('password') || this.isNew) {
+    try {
+      const hash = await bcrypt.hash(this.password, saltRounds);
+      this.password = hash;
+      next();
+  } catch (error) {
+     next(error);
+  }
+
+  } else {
+      next();
+  }
+});
+
 
 export default mongoose.model('User', UserSchema);
